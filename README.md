@@ -21,9 +21,25 @@ be found at [https://hexdocs.pm/http_stream](https://hexdocs.pm/http_stream).
 
 ## Examples
 
+Downloading an image:
+
 ```elixir
 image_url
 |> HTTPStream.get()
 |> Stream.into(File.stream!("image.png"))
 |> Stream.run()
 ```
+
+Streaming multiple images into a ZIP archive (using [zstream](zstream))
+
+```elixir
+[
+  Zstream.entry("a.png", HTTPStream.get(a_url))
+  Zstream.entry("b.png", HTTPStream.get(b_url))
+]
+|> Zstream.zip()
+|> Stream.into(File.stream!("archive.zip"))
+|> Stream.run()
+```
+
+zstream: https://github.com/ananthakumaran/zstream
