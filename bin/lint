@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+set -e
+
+source "./bin/functions"
+
+pp_info "lint" "running the elixir formatter..."
+mix format --check-formatted --dot-formatter .formatter.exs
+
+pp_info "lint" "running elixir credo..."
+mix credo --strict
+
+pp_success "lint" "no problems found!"
