@@ -7,7 +7,7 @@ defmodule HTTPStream.MixProject do
   def project do
     [
       app: :http_stream,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -33,7 +33,7 @@ defmodule HTTPStream.MixProject do
 
   defp deps(env) when env in [:dev, :test] do
     [
-      {:credo, "~> 1.0.0", runtime: false},
+      {:credo, "~> 1.0.0", only: :dev, runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
