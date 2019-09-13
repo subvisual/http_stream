@@ -29,7 +29,7 @@ defmodule HTTPStream.MixProject do
 
   defp deps(env) when env in [:dev, :test] do
     [
-      {:credo, "~> 1.0.0", runtime: false},
+      {:credo, "~> 1.0.0", runtime: false}
     ]
   end
 
