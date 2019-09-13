@@ -29,7 +29,6 @@ Streaming multiple images into a ZIP archive (using [zstream](zstream))
 
 * [Installation](#installation)
 * [Development](#development)
-* [Deployment](#deployment)
 * [Contribution Guidelines](#contribution-guidelines)
 * [About](#about)
 
@@ -60,7 +59,7 @@ bin/setup
 
 PRs and issues welcome.
 
-## TODOs
+### TODOs
 
 - [ ] Add remaining HTTP requests
 - [ ] Add tests
