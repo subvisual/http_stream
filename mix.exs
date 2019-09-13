@@ -2,6 +2,7 @@ defmodule HTTPStream.MixProject do
   use Mix.Project
 
   @env Mix.env()
+  @github_url "https://github.com/subvisual/http_stream"
 
   def project do
     [
@@ -9,7 +10,10 @@ defmodule HTTPStream.MixProject do
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package(),
+      source_url: @github_url,
+      description: "A tiny, tiny package that wraps HTTP requests into a Stream"
     ]
   end
 
@@ -34,4 +38,11 @@ defmodule HTTPStream.MixProject do
   end
 
   defp deps(_), do: []
+
+  defp package do
+    [
+      licenses: ["ISC"],
+      links: %{"GitHub" => @github_url}
+    ]
+  end
 end
