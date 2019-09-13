@@ -1,25 +1,8 @@
-# HTTPStream
+HTTPStream
+==========
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `http_stream` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:http_stream, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/http_stream](https://hexdocs.pm/http_stream).
-
-## Examples
+HTTPStream is a tiny, tiny package that wraps HTTP requests into a `Stream` so
+that you can manage data on the fly, without keeping everything in memory.
 
 Downloading an image:
 
@@ -42,4 +25,60 @@ Streaming multiple images into a ZIP archive (using [zstream](zstream))
 |> Stream.run()
 ```
 
-zstream: https://github.com/ananthakumaran/zstream
+**Table of Contents**
+
+* [Installation](#installation)
+* [Development](#development)
+* [Deployment](#deployment)
+* [Contribution Guidelines](#contribution-guidelines)
+* [About](#about)
+
+Installation
+------------
+
+First, you need to add `http_stream` to your list of dependencies on `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:http_stream, "~> 0.1.0"}
+  ]
+end
+```
+
+Development
+-----------
+
+If you want to setup the project for local development, you can just run the
+following commands.
+
+```
+git clone git@github.com:subvisual/http_stream.git
+cd http_stream
+bin/setup
+```
+
+PRs and issues welcome.
+
+## TODOs
+
+- [ ] Add remaining HTTP requests
+- [ ] Add tests
+- [ ] Add documentation
+
+Contribution Guidelines
+-----------------------
+
+Contributions must follow [Subvisual's guides](https://github.com/subvisual/guides).
+
+About
+-----
+
+HTTPStream is maintained by [Subvisual](http://subvisual.co).
+
+[![Subvisual](https://raw.githubusercontent.com/subvisual/guides/master/github/templates/subvisual_logo_with_name.png)](http://subvisual.co)
+
+If you need to contact the maintainer, you may <a href="mailto:contact@subvisual.co">reach out to us</a>.
+
+
+[zstream]: https://github.com/ananthakumaran/zstream
