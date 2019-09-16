@@ -11,9 +11,10 @@ defmodule HTTPStream do
 
   defp start_connection(url) do
     with uri <- URI.parse(url),
-         {:ok, conn} <-
-           Mint.HTTP.connect(String.to_atom(uri.scheme), uri.host, uri.port),
-         {:ok, conn, ref} <- Mint.HTTP.request(conn, "GET", uri.path, [], "") do
+         scheme <- String.to_atom(uri.scheme),
+         path <- uri.path || "/",
+         {:ok, conn} <- Mint.HTTP.connect(scheme, uri.host, uri.port),
+         {:ok, conn, ref} <- Mint.HTTP.request(conn, "GET", path, [], "") do
       {conn, ref, :continue}
     end
   end
