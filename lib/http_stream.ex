@@ -1,7 +1,14 @@
 defmodule HTTPStream do
-  def get(url) do
+  def get(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, [])
+    query = Keyword.get(opts, :query, [])
+
+    do_get(url, headers, query)
+  end
+
+  defp do_get(url, headers, query) do
     Stream.resource(
-      fn -> start_connection(url) end,
+      fn -> start_connection(url, headers, query) end,
       &parse_response_chunks/1,
       &close_connection/1
     )
@@ -9,12 +16,12 @@ defmodule HTTPStream do
     |> Stream.map(fn {:data, _ref, chunk} -> chunk end)
   end
 
-  defp start_connection(url) do
+  defp start_connection(url, headers, query) do
     with uri <- URI.parse(url),
          scheme <- String.to_atom(uri.scheme),
-         path <- uri.path || "/",
+         path <- encode_query_params(uri.path || "/", query),
          {:ok, conn} <- Mint.HTTP.connect(scheme, uri.host, uri.port),
-         {:ok, conn, ref} <- Mint.HTTP.request(conn, "GET", path, [], "") do
+         {:ok, conn, ref} <- Mint.HTTP.request(conn, "GET", path, headers, "") do
       {conn, ref, :continue}
     end
   end
@@ -44,6 +51,11 @@ defmodule HTTPStream do
   end
 
   defp handle_unknown_message(conn, ref), do: {[], {conn, ref, :continue}}
+
+  defp encode_query_params(url, []), do: url
+
+  defp encode_query_params(url, query),
+    do: url <> "?" <> URI.encode_query(query)
 
   defp message_type(message) when is_tuple(message), do: elem(message, 0)
   defp data_message?(message), do: message_type(message) == :data
