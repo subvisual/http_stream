@@ -42,6 +42,10 @@ defmodule HTTPStream do
     Mint.HTTP.close(conn)
   end
 
+  defp close_connection({conn, _ref, :halt}) do
+    Mint.HTTP.close(conn)
+  end
+
   defp handle_responses(conn, ref, responses) do
     if Enum.any?(responses, &done_message?/1) do
       {responses, {conn, ref, :halt}}
