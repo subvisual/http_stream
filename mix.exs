@@ -25,8 +25,8 @@ defmodule HTTPStream.MixProject do
 
   defp deps do
     [
-      {:castore, "~> 0.1.0"},
-      {:mint, "~> 0.2.0"}
+      {:castore, "~> 0.1.7"},
+      {:mint, "~> 1.1.0"}
       | deps(@env)
     ]
   end

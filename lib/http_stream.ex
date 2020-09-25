@@ -20,7 +20,8 @@ defmodule HTTPStream do
     with uri <- URI.parse(url),
          scheme <- String.to_atom(uri.scheme),
          path <- encode_query_params(uri.path || "/", query),
-         {:ok, conn} <- Mint.HTTP.connect(scheme, uri.host, uri.port),
+         {:ok, conn} <-
+           Mint.HTTP.connect(scheme, uri.host, uri.port, mode: :passive),
          {:ok, conn, ref} <- Mint.HTTP.request(conn, "GET", path, headers, "") do
       {conn, ref, :continue}
     end
@@ -29,12 +30,9 @@ defmodule HTTPStream do
   defp parse_response_chunks({conn, ref, :halt}), do: {:halt, {conn, ref}}
 
   defp parse_response_chunks({conn, ref, :continue}) do
-    receive do
-      message ->
-        case Mint.HTTP.stream(conn, message) do
-          :unknown -> handle_unknown_message(conn, ref)
-          {:ok, conn, responses} -> handle_responses(conn, ref, responses)
-        end
+    case Mint.HTTP.recv(conn, 0, :infinity) do
+      {:ok, conn, responses} -> handle_responses(conn, ref, responses)
+      {:error, conn, _error, responses} -> {responses, {conn, ref, :halt}}
     end
   end
 
@@ -53,8 +51,6 @@ defmodule HTTPStream do
       {responses, {conn, ref, :continue}}
     end
   end
-
-  defp handle_unknown_message(conn, ref), do: {[], {conn, ref, :continue}}
 
   defp encode_query_params(url, []), do: url
 
