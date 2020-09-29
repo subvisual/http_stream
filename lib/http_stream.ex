@@ -1,4 +1,27 @@
 defmodule HTTPStream do
+  @moduledoc """
+  HTTPStream is a tiny tiny library for streaming big big files. It works by
+  wrapping HTTP requests onto a Stream. You can use it with Flow, write it to
+  disk through regular streams and more!
+
+  ```
+  HTTPStream.get(large_image_url)
+  |> Stream.into(File.stream!("large_image.png"))
+  |> Stream.run()
+  ```
+  """
+
+  @doc """
+  Performs a GET request.
+
+  Supported options:
+
+  * `:headers` (default: `[]`) - Keyword list of HTTP headers to add to the request.
+  * `:query` (default: `[]`) - Keyword list of query params to add to the request.
+  """
+
+  @spec get(String.t() | keyword()) :: Stream.t()
+
   def get(url, opts \\ []) do
     headers = Keyword.get(opts, :headers, [])
     query = Keyword.get(opts, :query, [])
@@ -36,13 +59,8 @@ defmodule HTTPStream do
     end
   end
 
-  defp close_connection({conn, _ref}) do
-    Mint.HTTP.close(conn)
-  end
-
-  defp close_connection({conn, _ref, :halt}) do
-    Mint.HTTP.close(conn)
-  end
+  defp close_connection({conn, _ref}), do: Mint.HTTP.close(conn)
+  defp close_connection({conn, _ref, :halt}), do: Mint.HTTP.close(conn)
 
   defp handle_responses(conn, ref, responses) do
     if Enum.any?(responses, &done_message?/1) do
