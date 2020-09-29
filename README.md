@@ -6,9 +6,8 @@ that you can manage data on the fly, without keeping everything in memory.
 Downloading an image:
 
 ```elixir
-image_url
-|> HTTPStream.get()
-|> Stream.into(File.stream!("image.png"))
+HTTPStream.get(large_image_url)
+|> Stream.into(File.stream!("large_image.png"))
 |> Stream.run()
 ```
 
@@ -69,12 +68,12 @@ Feel free to contribute!
 If you found a bug, open an issue. You can also open a PR for bugs or new
 features. Your PRs will be reviewed and subjected to our styleguide and linters.
 
-All contributions **must** follow the [Code of Conduct](./CODE_OF_CONDUCT.md)
+All contributions **must** follow the [Code of Conduct][coc]
 and [Subvisual's guides][subvisual-guides].
 
 ## About
 
-HTTPStream is maintained with :heart: by [Subvisual][subvisual].
+HTTPStream is maintained with ❤️  by [Subvisual][subvisual].
 
 <br>
 
@@ -84,3 +83,4 @@ HTTPStream is maintained with :heart: by [Subvisual][subvisual].
 [subvisual]: https://subvisual.com
 [subvisual-guides]: https://github.com/subvisual/guides
 [subvisual-logo]: https://raw.githubusercontent.com/subvisual/guides/master/github/templates/logos/blue.png
+[coc]: https://github.com/subvisual/http_stream/blob/master/CODE_OF_CONDUCT.md
