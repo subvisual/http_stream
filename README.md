@@ -1,5 +1,4 @@
-HTTPStream
-==========
+# HTTPStream
 
 HTTPStream is a tiny, tiny package that wraps HTTP requests into a `Stream` so
 that you can manage data on the fly, without keeping everything in memory.
@@ -13,7 +12,7 @@ image_url
 |> Stream.run()
 ```
 
-Streaming multiple images into a ZIP archive (using [zstream](zstream))
+Streaming multiple images into a ZIP archive (using [zstream][zstream])
 
 ```elixir
 [
@@ -25,15 +24,14 @@ Streaming multiple images into a ZIP archive (using [zstream](zstream))
 |> Stream.run()
 ```
 
-**Table of Contents**
+## Table of Contents
 
 * [Installation](#installation)
 * [Development](#development)
-* [Contribution Guidelines](#contribution-guidelines)
+* [Contributing](#contributing)
 * [About](#about)
 
-Installation
-------------
+## Installation
 
 First, you need to add `http_stream` to your list of dependencies on `mix.exs`:
 
@@ -45,8 +43,7 @@ def deps do
 end
 ```
 
-Development
------------
+## Development
 
 If you want to setup the project for local development, you can just run the
 following commands.
@@ -61,23 +58,29 @@ PRs and issues welcome.
 
 ### TODOs
 
-- [ ] Add remaining HTTP requests
-- [ ] Add tests
-- [ ] Add documentation
+* [ ] Add remaining HTTP requests
+* [ ] Add tests
+* [ ] Add documentation
 
-Contribution Guidelines
------------------------
+## Contributing
 
-Contributions must follow [Subvisual's guides](https://github.com/subvisual/guides).
+Feel free to contribute!
 
-About
------
+If you found a bug, open an issue. You can also open a PR for bugs or new
+features. Your PRs will be reviewed and subjected to our styleguide and linters.
 
-HTTPStream is maintained by [Subvisual](http://subvisual.co).
+All contributions **must** follow the [Code of Conduct](./CODE_OF_CONDUCT.md)
+and [Subvisual's guides][subvisual-guides].
 
-[![Subvisual](https://raw.githubusercontent.com/subvisual/guides/master/github/templates/subvisual_logo_with_name.png)](http://subvisual.co)
+## About
 
-If you need to contact the maintainer, you may <a href="mailto:contact@subvisual.co">reach out to us</a>.
+HTTPStream is maintained with :heart: by [Subvisual][subvisual].
 
+<br>
+
+![Subvisual][subvisual-logo]
 
 [zstream]: https://github.com/ananthakumaran/zstream
+[subvisual]: https://subvisual.com
+[subvisual-guides]: https://github.com/subvisual/guides
+[subvisual-logo]: https://raw.githubusercontent.com/subvisual/guides/master/github/templates/logos/blue.png
