@@ -33,9 +33,9 @@ defmodule HTTPStream.MixProject do
     [
       {:castore, "~> 0.1.7"},
       {:mint, "~> 1.1.0"},
-      {:credo, "~> 1.0.0", only: :dev, runtime: false},
+      {:credo, "~> 1.5.0-rc.2", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:jason, "~> 1.2", only: :test},
+      {:jason, "~> 1.2", only: [:dev, :test]},
       {:plug_cowboy, "~> 2.0", only: :test}
     ]
   end

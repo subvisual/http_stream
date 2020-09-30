@@ -1,5 +1,7 @@
 # HTTPStream
 
+![Build][build-badge]
+
 HTTPStream is a tiny, tiny package that wraps HTTP requests into a `Stream` so
 that you can manage data on the fly, without keeping everything in memory.
 
@@ -79,6 +81,7 @@ HTTPStream is maintained with ❤️  by [Subvisual][subvisual].
 
 ![Subvisual][subvisual-logo]
 
+[build-badge]: https://github.com/subvisual/http_stream/workflows/build/badge.svg
 [zstream]: https://github.com/ananthakumaran/zstream
 [subvisual]: https://subvisual.com
 [subvisual-guides]: https://github.com/subvisual/guides
