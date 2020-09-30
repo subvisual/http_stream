@@ -1,3 +1,3 @@
 use Mix.Config
 
-config :http_stream, :mock_http_server, port: 3000
+config :http_stream, HTTPStream.HTTPServer, port: 3000
