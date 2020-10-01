@@ -44,6 +44,23 @@ defmodule HTTPStream do
   end
 
   @doc """
+  Performs a DELETE request.
+
+  Supported options:
+
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:query` (optional) - Keyword list of query params to add to the request.
+  """
+
+  @spec delete(String.t(), keyword()) :: Enumerable.t()
+  def delete(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
+    query = Keyword.get(opts, :query, [])
+
+    request("DELETE", url, headers, query)
+  end
+
+  @doc """
   Performs a OPTIONS request.
 
   Supported options:
@@ -148,7 +165,7 @@ defmodule HTTPStream do
   @doc """
   Performs an HTTP request.
 
-  Supported methods: GET OPTIONS HEAD TRACE POST PUT PATCH
+  Supported methods: GET, OPTIONS, HEAD, TRACE, POST, PUT, PATCH and DELETE
   """
 
   @spec request(method(), String.t(), keyword(), binary()) :: Enumerable.t()

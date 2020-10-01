@@ -3,7 +3,6 @@ defmodule HTTPStream.HTTPServer.Endpoint do
 
   alias HTTPStream.HTTPServer
 
-  plug Plug.Logger
   plug Plug.Parsers, parsers: [:json], json_decoder: Jason
   plug :match
   plug :dispatch

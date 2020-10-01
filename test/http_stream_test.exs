@@ -2,7 +2,7 @@ defmodule HTTPStreamTest do
   use HTTPStream.HTTPCase
   doctest HTTPStream
 
-  for method <- ~w(get options)a do
+  for method <- ~w(get options delete)a do
     describe "#{method}/2" do
       upcased_method = method |> to_string() |> String.upcase()
 

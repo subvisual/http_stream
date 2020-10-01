@@ -13,7 +13,7 @@ defmodule HTTPStream.Request do
   * `body`: `binary()` - e.g. `{ "id": "1" }`
   """
 
-  @supported_methods ~w(GET OPTIONS HEAD TRACE POST PUT PATCH)
+  @supported_methods ~w(GET OPTIONS HEAD TRACE POST PUT PATCH DELETE)
 
   defstruct scheme: nil,
             host: nil,
@@ -41,7 +41,7 @@ defmodule HTTPStream.Request do
 
   * `headers` - HTTP headers to be sent.
   * `body` - Body of the HTTP request. This will be the request `query` field
-  if the method is one of "GET", "TRACE", "HEAD" or "OPTIONS".
+  if the method is one of "GET", "TRACE", "HEAD", "OPTIONS" and "DELETE".
 
   This function raises an `ArgumentError` if the HTTP method is unsupported or
   the `url` argument isn't a string.
@@ -86,7 +86,7 @@ defmodule HTTPStream.Request do
   end
 
   defp body_and_query_from_method(method, opts)
-       when method in ~w(GET OPTIONS HEAD TRACE) do
+       when method in ~w(GET OPTIONS HEAD TRACE DELETE) do
     query = Keyword.get(opts, :body, [])
     {"", query}
   end
