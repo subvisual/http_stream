@@ -44,6 +44,57 @@ defmodule HTTPStream do
   end
 
   @doc """
+  Performs a OPTIONS request.
+
+  Supported options:
+
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:query` (optional) - Keyword list of query params to add to the request.
+  """
+
+  @spec options(String.t(), keyword()) :: Enumerable.t()
+  def options(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
+    query = Keyword.get(opts, :query, [])
+
+    request("OPTIONS", url, headers, query)
+  end
+
+  @doc """
+  Performs a TRACE request.
+
+  Supported options:
+
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:query` (optional) - Keyword list of query params to add to the request.
+  """
+
+  @spec trace(String.t(), keyword()) :: Enumerable.t()
+  def trace(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
+    query = Keyword.get(opts, :query, [])
+
+    request("TRACE", url, headers, query)
+  end
+
+  @doc """
+  Performs a HEAD request.
+
+  Supported options:
+
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:query` (optional) - Keyword list of query params to add to the request.
+  """
+
+  @spec head(String.t(), keyword()) :: Enumerable.t()
+  def head(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
+    query = Keyword.get(opts, :query, [])
+
+    request("HEAD", url, headers, query)
+  end
+
+  @doc """
   Performs a POST request.
 
   Supported options:
@@ -97,7 +148,7 @@ defmodule HTTPStream do
   @doc """
   Performs an HTTP request.
 
-  Supported methods: GET
+  Supported methods: GET OPTIONS HEAD TRACE POST PUT PATCH
   """
 
   @spec request(method(), String.t(), keyword(), binary()) :: Enumerable.t()

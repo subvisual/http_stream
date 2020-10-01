@@ -2,33 +2,83 @@ defmodule HTTPStreamTest do
   use HTTPStream.HTTPCase
   doctest HTTPStream
 
-  describe "get/2" do
-    test "makes a GET request" do
-      %{"method" => method} =
-        HTTPStream.get("http://localhost:3000")
-        |> parse_response()
+  for method <- ~w(get options)a do
+    describe "#{method}/2" do
+      upcased_method = method |> to_string() |> String.upcase()
 
-      assert method == "GET"
+      test "makes a #{upcased_method} request" do
+        %{"method" => method} =
+          apply(HTTPStream, unquote(method), ["http://localhost:3000"])
+          |> parse_response()
+
+        assert method == unquote(upcased_method)
+      end
+
+      test "sets the correct headers" do
+        headers = [authorization: "Bearer 123"]
+
+        %{"headers" => headers} =
+          apply(HTTPStream, unquote(method), [
+            "http://localhost:3000",
+            [headers: headers]
+          ])
+          |> parse_response()
+
+        assert headers["authorization"] == "Bearer 123"
+      end
+
+      test "sets the query params" do
+        params = [email: "user@example.org"]
+
+        %{"params" => params} =
+          apply(HTTPStream, unquote(method), [
+            "http://localhost:3000",
+            [query: params]
+          ])
+          |> parse_response()
+
+        assert params["email"] == "user@example.org"
+      end
     end
+  end
 
-    test "sets the correct headers" do
-      headers = [authorization: "Bearer 123"]
+  for method <- ~w(head trace)a do
+    describe "#{method}/2" do
+      upcased_method = method |> to_string() |> String.upcase()
 
-      %{"headers" => headers} =
-        HTTPStream.get("http://localhost:3000", headers: headers)
-        |> parse_response()
+      test "makes a #{upcased_method} request" do
+        response =
+          apply(HTTPStream, unquote(method), ["http://localhost:3000"])
+          |> Enum.join("")
 
-      assert headers["authorization"] == "Bearer 123"
-    end
+        assert response == ""
+      end
 
-    test "sets the query params" do
-      params = [email: "user@example.org"]
+      test "sets the correct headers" do
+        headers = [authorization: "Bearer 123"]
 
-      %{"params" => params} =
-        HTTPStream.get("http://localhost:3000", query: params)
-        |> parse_response()
+        response =
+          apply(HTTPStream, unquote(method), [
+            "http://localhost:3000",
+            [headers: headers]
+          ])
+          |> Enum.join("")
 
-      assert params["email"] == "user@example.org"
+        assert response == ""
+      end
+
+      test "sets the query params" do
+        params = [email: "user@example.org"]
+
+        response =
+          apply(HTTPStream, unquote(method), [
+            "http://localhost:3000",
+            [query: params]
+          ])
+          |> Enum.join("")
+
+        assert response == ""
+      end
     end
   end
 
