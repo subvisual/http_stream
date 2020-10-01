@@ -1,7 +1,7 @@
 defmodule HTTPStream.MixProject do
   use Mix.Project
 
-  @version "0.2.0"
+  @version "1.0.0"
   @source_url "https://github.com/subvisual/http_stream"
 
   def project do
@@ -55,7 +55,7 @@ defmodule HTTPStream.MixProject do
   end
 
   defp description do
-    "A tiny, tiny library to stream big big files. HTTPStream wraps HTTP requests into a Stream"
+    "A tiny, tiny library to stream big big files. HTTPStream wraps HTTP requests into a Stream."
   end
 
   defp docs do
