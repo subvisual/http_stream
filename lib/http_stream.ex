@@ -53,12 +53,45 @@ defmodule HTTPStream do
   """
 
   @spec post(String.t(), keyword()) :: Enumerable.t()
-
   def post(url, opts \\ []) do
     headers = Keyword.get(opts, :headers, []) |> to_keyword()
     params = Keyword.get(opts, :params, "") |> to_json()
 
     request("POST", url, headers, params)
+  end
+
+  @doc """
+  Performs a PUT request.
+
+  Supported options:
+
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:params` (optional) - Keyword list of query params to add to the request.
+  """
+
+  @spec put(String.t(), keyword()) :: Enumerable.t()
+  def put(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
+    params = Keyword.get(opts, :params, "") |> to_json()
+
+    request("PUT", url, headers, params)
+  end
+
+  @doc """
+  Performs a PATCH request.
+
+  Supported options:
+
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:params` (optional) - Keyword list of query params to add to the request.
+  """
+
+  @spec patch(String.t(), keyword()) :: Enumerable.t()
+  def patch(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
+    params = Keyword.get(opts, :params, "") |> to_json()
+
+    request("PATCH", url, headers, params)
   end
 
   @doc """

@@ -32,37 +32,44 @@ defmodule HTTPStreamTest do
     end
   end
 
-  describe "post/2" do
-    test "makes a POST request" do
-      %{"method" => method} =
-        HTTPStream.post("http://localhost:3000")
-        |> parse_response()
+  for method <- ~w(post put patch)a do
+    describe "#{method}/2" do
+      upcased_method = method |> to_string() |> String.upcase()
 
-      assert method == "POST"
-    end
+      test "makes a #{upcased_method} request" do
+        %{"method" => method} =
+          apply(HTTPStream, unquote(method), ["http://localhost:3000"])
+          |> parse_response()
 
-    test "sets the correct headers" do
-      headers = [authorization: "Bearer 123"]
+        assert method == unquote(upcased_method)
+      end
 
-      %{"headers" => headers} =
-        HTTPStream.post("http://localhost:3000", headers: headers)
-        |> parse_response()
+      test "sets the correct headers" do
+        headers = [authorization: "Bearer 123"]
 
-      assert headers["authorization"] == "Bearer 123"
-    end
+        %{"headers" => headers} =
+          apply(HTTPStream, unquote(method), [
+            "http://localhost:3000",
+            [headers: headers]
+          ])
+          |> parse_response()
 
-    test "sets the params" do
-      params = %{email: "user@example.org"}
-      headers = ["content-type": "application/json"]
+        assert headers["authorization"] == "Bearer 123"
+      end
 
-      %{"params" => params} =
-        HTTPStream.post("http://localhost:3000",
-          params: params,
-          headers: headers
-        )
-        |> parse_response()
+      test "sets the params" do
+        params = %{email: "user@example.org"}
+        headers = ["content-type": "application/json"]
 
-      assert params["email"] == "user@example.org"
+        %{"params" => params} =
+          apply(HTTPStream, unquote(method), [
+            "http://localhost:3000",
+            [headers: headers, params: params]
+          ])
+          |> parse_response()
+
+        assert params["email"] == "user@example.org"
+      end
     end
   end
 end
