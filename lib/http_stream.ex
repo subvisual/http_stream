@@ -18,7 +18,7 @@ defmodule HTTPStream do
   config :http_stream, adapter: HTTPStream.Adapter.Mint
   ```
 
-  At the moment, only the Mint adapter is supported.
+  At the moment, only two adapters are supported: Mint (default) and HTTPoison.
   """
 
   alias HTTPStream.Adapter

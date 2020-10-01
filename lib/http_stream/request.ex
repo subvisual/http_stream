@@ -79,6 +79,18 @@ defmodule HTTPStream.Request do
     raise ArgumentError, "URL must be a string"
   end
 
+  def url_for(%__MODULE__{scheme: scheme, host: host, port: port, path: path}) do
+    [
+      scheme,
+      "://",
+      host,
+      ":",
+      port,
+      path
+    ]
+    |> Enum.join("")
+  end
+
   defp encode_query_params(path, []), do: path
 
   defp encode_query_params(path, query) do

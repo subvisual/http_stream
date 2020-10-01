@@ -39,10 +39,28 @@ First, you need to add `http_stream` to your list of dependencies on `mix.exs`:
 ```elixir
 def deps do
   [
-    {:http_stream, "~> 0.2.0"}
+    {:http_stream, "~> 0.2.0"},
+
+    # if using the Mint adapter:
+    {:castore, "~> 0.1.7"},
+    {:mint, "~> 1.1.0"}
+
+    # if using the HTTPoison adapter:
+    {:httpoison, "~> 1.7.0"}
   ]
 end
 ```
+
+HTTPStream comes with two adapters: [`Mint`][mint] and [`HTTPoison`][httpoison].
+By default `Mint` is configured but you need to include it in your dependencies.
+
+To use `HTTPoison`, set in your `config/config.exs`:
+
+```elixir
+config :http_stream, adapter: HTTPStream.Adapter.HTTPoison
+```
+
+That's it! For more intricate API details, refer to the [documentation][docs].
 
 ## Development
 
@@ -78,6 +96,9 @@ HTTPStream is maintained with ❤️  by [Subvisual][subvisual].
 [build-badge]: https://github.com/subvisual/http_stream/workflows/build/badge.svg
 [build]: https://github.com/subvisual/http_stream/actions?query=workflow%3Abuild
 [zstream]: https://github.com/ananthakumaran/zstream
+[mint]: https://github.com/elixir-mint/mint
+[httpoison]: https://github.com/edgurgel/httpoison
+[docs]: https://hexdocs.pm/http_stream
 [subvisual]: https://subvisual.com
 [subvisual-guides]: https://github.com/subvisual/guides
 [subvisual-logo]: https://raw.githubusercontent.com/subvisual/guides/master/github/templates/logos/blue.png
