@@ -31,17 +31,28 @@ defmodule HTTPStream do
 
   Supported options:
 
-  * `:headers` (default: `[]`) - Keyword list of HTTP headers to add to the request.
-  * `:query` (default: `[]`) - Keyword list of query params to add to the request.
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:query` (optional) - Keyword list of query params to add to the request.
   """
 
-  @spec get(String.t(), keyword()) :: Stream.t()
+  @spec get(String.t(), keyword()) :: Enumerable.t()
   def get(url, opts \\ []) do
     headers = Keyword.get(opts, :headers, []) |> to_keyword()
     query = Keyword.get(opts, :query, [])
 
     request("GET", url, headers, query)
   end
+
+  @doc """
+  Performs a POST request.
+
+  Supported options:
+
+  * `:headers` (optional) - Keyword list of HTTP headers to add to the request.
+  * `:params` (optional) - Keyword list of query params to add to the request.
+  """
+
+  @spec post(String.t(), keyword()) :: Enumerable.t()
 
   def post(url, opts \\ []) do
     headers = Keyword.get(opts, :headers, []) |> to_keyword()
@@ -56,7 +67,7 @@ defmodule HTTPStream do
   Supported methods: GET
   """
 
-  @spec request(method(), String.t(), keyword(), binary()) :: Stream.t()
+  @spec request(method(), String.t(), keyword(), binary()) :: Enumerable.t()
   def request(method, url, headers \\ [], body \\ "") do
     Request.new(method, url, headers: headers, body: body)
     |> do_request()
