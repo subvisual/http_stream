@@ -57,12 +57,6 @@ bin/setup
 
 PRs and issues welcome.
 
-### TODOs
-
-* [ ] Add remaining HTTP requests
-* [ ] Add tests
-* [ ] Add documentation
-
 ## Contributing
 
 Feel free to contribute!
