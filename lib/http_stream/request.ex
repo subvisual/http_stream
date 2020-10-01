@@ -13,7 +13,7 @@ defmodule HTTPStream.Request do
   * `body`: `binary()` - e.g. `{ "id": "1" }`
   """
 
-  @supported_methods ~w(GET)
+  @supported_methods ~w(GET POST)
 
   defstruct scheme: nil,
             host: nil,

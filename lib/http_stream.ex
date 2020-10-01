@@ -37,10 +37,17 @@ defmodule HTTPStream do
 
   @spec get(String.t(), keyword()) :: Stream.t()
   def get(url, opts \\ []) do
-    headers = Keyword.get(opts, :headers, [])
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
     query = Keyword.get(opts, :query, [])
 
     request("GET", url, headers, query)
+  end
+
+  def post(url, opts \\ []) do
+    headers = Keyword.get(opts, :headers, []) |> to_keyword()
+    params = Keyword.get(opts, :params, "") |> to_json()
+
+    request("POST", url, headers, params)
   end
 
   @doc """
@@ -62,6 +69,13 @@ defmodule HTTPStream do
       &adapter().close/1
     )
   end
+
+  defp to_keyword(enum) do
+    Stream.map(enum, fn {k, v} -> {to_string(k), v} end)
+    |> Enum.to_list()
+  end
+
+  defp to_json(term), do: Jason.encode!(term)
 
   defp adapter, do: Application.get_env(:http_stream, :adapter, Adapter.Mint)
 end
