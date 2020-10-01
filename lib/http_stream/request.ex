@@ -28,7 +28,7 @@ defmodule HTTPStream.Request do
           host: binary() | nil,
           port: integer(),
           path: binary(),
-          method: String.t(),
+          method: binary(),
           headers: keyword(),
           body: binary()
         }

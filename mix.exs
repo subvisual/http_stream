@@ -16,13 +16,17 @@ defmodule HTTPStream.MixProject do
       deps: deps(),
       package: package(),
       name: "HTTPStream",
-      source_url: @source_url
+      source_url: @source_url,
+      dialyzer: [
+        plt_add_apps: [:mix, :ex_unit],
+        ignore_warnings: ".dialyzer_ignore.exs"
+      ]
     ]
   end
 
   def application do
     [
-      extra_applications: [:logger, :httpoison]
+      extra_applications: [:logger]
     ]
   end
 
@@ -35,6 +39,7 @@ defmodule HTTPStream.MixProject do
       {:mint, "~> 1.1.0", optional: true},
       {:httpoison, "~> 1.7.0", optional: true},
       {:credo, "~> 1.5.0-rc.2", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0", only: :dev, runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:jason, "~> 1.2", only: [:dev, :test]},
       {:plug_cowboy, "~> 2.0", only: :test}
