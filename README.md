@@ -39,7 +39,7 @@ First, you need to add `http_stream` to your list of dependencies on `mix.exs`:
 ```elixir
 def deps do
   [
-    {:http_stream, "~> 0.1.0"}
+    {:http_stream, "~> 0.2.0"}
   ]
 end
 ```
