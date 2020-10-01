@@ -1,14 +1,14 @@
 defmodule HTTPStream.Request do
   @moduledoc """
-  Structure that represents a request.
+  Struct that represents a request.
 
   Fields:
 
-  * `scheme`: `atom()` - e.g. :http or :https.
-  * `host`: `binary()` - e.g. "localhost"
-  * `port`: `integer()` - e.g. 80
-  * `path`: `binary()` - e.g "/users/1/avatar.png"
-  * `method`: `String.t()` - e.g. "GET"
+  * `scheme`: `atom()` - e.g. `:http`
+  * `host`: `binary()` - e.g. `"localhost"`
+  * `port`: `integer()` - e.g. `80`
+  * `path`: `binary()` - e.g `"/users/1/avatar.png"`
+  * `method`: `String.t()` - e.g. `"GET"`
   * `headers`: `keyword()` - e.g. `[authorization: "Bearer 123"]`
   * `body`: `binary()` - e.g. `{ "id": "1" }`
   """
@@ -33,8 +33,20 @@ defmodule HTTPStream.Request do
           body: binary()
         }
 
-  @spec new(String.t(), binary(), keyword()) :: t() | no_return()
+  @doc """
+  Parses a given URL and uses a given method to generate a valid
+  `HTTPStream.Request` struct.
 
+  Supported options:
+
+  * `headers` - HTTP headers to be sent.
+  * `body` - Body of the HTTP request. This will be the request `query` field
+  if the method is "GET".
+
+  This function raises an `ArgumentError` if the HTTP method is unsupported or
+  the `url` argument isn't a string.
+  """
+  @spec new(String.t(), String.t(), keyword()) :: t() | no_return()
   def new(method, url, opts \\ [])
 
   def new(method, url, opts)

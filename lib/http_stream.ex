@@ -1,5 +1,7 @@
 defmodule HTTPStream do
   @moduledoc """
+  Main API interface.
+
   HTTPStream is a tiny tiny library for streaming big big files. It works by
   wrapping HTTP requests onto a Stream. You can use it with Flow, write it to
   disk through regular streams and more!

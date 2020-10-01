@@ -7,10 +7,6 @@ defmodule HTTPStream.Adapter.Mint do
 
   @behaviour HTTPStream.Adapter
 
-  def connect(%Request{scheme: scheme, host: host, port: port}) do
-    Mint.HTTP.connect(scheme, host, port, mode: :passive)
-  end
-
   @impl true
   def request(%Request{} = request) do
     with {:ok, conn} <- connect(request),
@@ -37,6 +33,10 @@ defmodule HTTPStream.Adapter.Mint do
   @impl true
   def close({conn, _ref}), do: do_close(conn)
   def close({conn, _ref, :halt}), do: do_close(conn)
+
+  defp connect(%Request{scheme: scheme, host: host, port: port}) do
+    Mint.HTTP.connect(scheme, host, port, mode: :passive)
+  end
 
   defp do_request(conn, request) do
     Mint.HTTP.request(
