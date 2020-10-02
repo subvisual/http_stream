@@ -23,10 +23,18 @@ defmodule HTTPStream.HTTPCase do
       respond_with: response_module
     )
 
-    {:ok, _pid} = HTTPServer.start()
+    {:ok, pid} = HTTPServer.start()
 
     on_exit(fn ->
+      ref = Process.monitor(pid)
+
       HTTPServer.stop()
+
+      receive do
+        {:DOWN, ^ref, _, _, _} ->
+          :ok
+      end
+
       Application.put_env(:http_stream, HTTPServer, config)
     end)
 
